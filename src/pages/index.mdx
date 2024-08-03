@@ -1,0 +1,125 @@
+---
+layout: ../layouts/Layout.astro
+title: Exteroceptive perception for AlienGo and corresponding downstream applications
+description: Simple project page template for your research paper, built with Astro and Tailwind CSS
+favicon: /favicon.svg
+thumbnail: /screenshot.png
+---
+
+import { Image } from "astro:assets";
+
+import Layout from "../layouts/Layout.astro";
+
+import Header from "../components/Header.astro";
+import TwoColumns from "../components/TwoColumns.astro";
+import Video from "../components/Video.astro";
+import YouTubeVideo from "../components/YouTubeVideo.astro";
+import PDF from "../components/PDF.astro";
+import Figure from "../components/Figure.astro";
+import LaTeX from "../components/LaTeX.astro";
+import SmallCaps from "../components/SmallCaps.astro";
+import Splat from "../components/Splat.tsx"
+
+import CodeBlock from "../components/CodeBlock.astro";
+export const components = {pre: CodeBlock}
+
+import outside from "../assets/outside.mp4";
+import transformer from "../assets/transformer.webp";
+import firstfloor_3d from "../assets/firstfloor_3d.png";
+import fourthfloor_3d from "../assets/fourthfloor_3d.jpg";
+import firstfloor_2d from "../assets/firstfloor_2d.png";
+import evelation_map_1 from "../assets/elevation_map_example_1.jpg";
+import evelation_map_2 from "../assets/elevation_map_example_2.jpg";
+
+<Header
+  title={frontmatter.title}
+  authors={[
+    {
+      name: "Honghao Liao",
+      url: "",
+      institution: "VsisLab, Shandong University, China",
+      notes: [],
+      mail: "202214818@mail.sdu.edu.cn",
+    },
+  ]}
+  conference="Project Duration: 2022.10 - 2023.06"
+  />
+
+
+
+## Project Introduction
+
+In this project, we implement an exteroceptive sensory data acquisition framework for the quadruped robot Unitree AlienGo. The framework reads sensor data from the robot's built-in depth camera D435, visual odometer T265, and external lidar VLP-16. Furthermore, the sensor data can be packaged and transferred between devices in the form of ROS topics. With the framework, we subsequently implemented three downstream tasks: ***SLAM and autonomous navigation for quadruped robot***, ***elevation map-based navigation system for quadruped robot***, and an experimental project ***footage planning for quadruped robot***.
+
+## Demonstrations for Downstream Tasks
+
+In this section, we will give a brief overview of the downstream tasks showed in this page, in the form of demonstration videos and diagrams.
+
+### **SLAM and Autonomous Navigation**
+
+For SLAM task, we use the [Gmapping](http://wiki.ros.org/gmapping) and the [LIO-SAM](https://github.com/TixiaoShan/LIO-SAM) to achieve the construction of 2D planar maps and 3D point cloud maps of the surroundings by the quadruped robot.
+ 
+<Figure
+    caption="Indoor large-scene 3D point cloud map construction (total area of about 1000 square metres). The blue line in the figure is the movement route of the quadruped robot during map building."
+  >
+    <Image src={firstfloor_3d} alt="alt text" />
+</Figure>
+
+<Figure
+    caption="3D point cloud map construction for indoor scene with long corridor loop (total length of corridor loop is approximately 80m)."
+  >
+    <Image src={fourthfloor_3d} alt="alt text" />
+</Figure>
+
+<Figure
+    caption="Indoor large scene 2D map construction. The green line in the figure is the movement route of the quadruped robot during map building."
+  >
+    <Image src={firstfloor_2d} alt="alt text" />
+</Figure>
+
+For the autonomous navigation task, we implemented a navigation system for quadruped robots based on [ROS Navigation Stack](http://wiki.ros.org/navigation). 
+
+<Figure caption="demonstration video for autonomous navigation system.">
+  <YouTubeVideo videoId="va0VFYZ3pNw" />
+</Figure>
+
+### **Elevation Map-based Navigation System**
+
+In this task, we used [elevation mapping cupy](https://github.com/leggedrobotics/elevation_mapping_cupy) as an elevation map construction tool. Further, we implemented an autonomous navigation system based on elevation maps, which contains global path planning and local path planning. This system can help the quadruped robot bypass or directly cross different obstacles according to its own locomotion ability.
+
+<TwoColumns>
+  <Figure slot="left" caption="top-down view of elevation map example.">
+    <Image src={evelation_map_1} alt="alt text" />
+  </Figure>
+  <Figure slot="right" caption="lateral view of elevation map example.">
+    <Image src={evelation_map_2} alt="alt text" />
+  </Figure>
+</TwoColumns>
+
+<Figure caption="demonstration video for elevation map-based navigation system.">
+  <YouTubeVideo videoId="bmtyoyeI0c0" />
+</Figure>
+
+### **Footage Planning**
+
+The task is done based on [quad-sdk](https://github.com/robomechanics/quad-sdk) and focuses mainly on the implementation of footage planning for quadruped robots Unitree AlienGo using surrounding elevation information. Note that some of the following demos incorporate the global path planner [gbpl](https://github.com/jcnorby/global_body_planner).
+
+<Figure caption="Climb up a 20cm high stair.">
+  <YouTubeVideo videoId="FZnY1NfZ-9c" />
+</Figure>
+
+<Figure caption="Climb slope.">
+  <YouTubeVideo videoId="czAjJp5tvpo" />
+</Figure>
+
+<Figure caption="Walk cross a 20cm wide ditch.">
+  <YouTubeVideo videoId="n5M5UOX5sCQ" />
+</Figure>
+
+<Figure caption="Jump up a 20cm high stair(with global planner).">
+  <YouTubeVideo videoId="rR3x6GIGRc0" />
+</Figure>
+
+<Figure caption="Leap over a 20cm wide ditch(with global planner).">
+  <YouTubeVideo videoId="h-crpOEeoG4" />
+</Figure>
